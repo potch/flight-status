@@ -1,6 +1,6 @@
 {
   "name": "flight-status",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "grab flight status",
   "main": "index.js",
   "scripts": {
@@ -16,5 +16,14 @@
     "cheerio": "^0.17.0",
     "nomnom": "^1.8.0",
     "request": "^2.45.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/potch/flight-status.git"
+  },
+  "bugs": {
+    "url": "https://github.com/potch/flight-status/issues"
+  },
+  "homepage": "https://github.com/potch/flight-status"
 }
