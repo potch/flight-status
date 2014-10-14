@@ -1,0 +1,20 @@
+{
+  "name": "flight-status",
+  "version": "1.0.1",
+  "description": "grab flight status",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "potch",
+  "license": "ISC",
+  "bin": {
+    "flight": "index.js"
+  },
+  "dependencies": {
+    "chalk": "^0.5.1",
+    "cheerio": "^0.17.0",
+    "nomnom": "^1.8.0",
+    "request": "^2.45.0"
+  }
+}
