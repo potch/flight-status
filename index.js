@@ -49,7 +49,7 @@ request('http://flightaware.com/live/flight/' + code, function (error, response,
     var trs = table.find('tr');
     trs.each(function (i) {
       var header = trs.eq(i).find('th').text().trim().toLowerCase();
-      var val = trs.eq(i).find('td').contents().first().text().trim();
+      var val = trs.eq(i).find('td').contents().first().text().trim().replace(/[\s(]+$/, '');
       data[header] = val;
     });
 
