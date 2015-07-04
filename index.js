@@ -41,8 +41,6 @@ request('http://flightaware.com/live/flight/' + code, function (error, response,
   if (!error && response.statusCode == 200) {
     $ = cheerio.load(body);
 
-    println();
-
     var data = {};
 
     var table = $('.track-panel-data');
@@ -53,8 +51,8 @@ request('http://flightaware.com/live/flight/' + code, function (error, response,
       data[header] = val;
     });
 
-    println(data.status);
-
+    var origin = $('.track-panel-departure .hint').attr('title');
+    var destination = $('.track-panel-arrival .hint').attr('title');
     var times = $('.track-panel-actualtime');
     var departure = times.eq(0);
     if (departure.children().first().hasClass('flightStatusGood')) {
@@ -68,22 +66,32 @@ request('http://flightaware.com/live/flight/' + code, function (error, response,
     } else {
       arrival = chalk.red(arrival.text().trim());
     }
+
+    println();
+    println('Status:    ' + chalk.bold(data.status));
     println('Departure: ' + departure);
+    println('           ' + origin);
     println('Arrival:   ' + arrival);
+    println('           ' + destination);
 
     var progress = $('.track-panel-progress');
     if (progress.length) {
       var elapsed = $('.track-panel-progress-fill').text().trim();
       var remaining = $('.track-panel-progress-empty').text().trim();
       var pct = $('.track-panel-progress-fill').css('width');
-      pct = parseInt(pct, 10) / 2 | 0;
-      var rem = 50 - pct;
+      pct = parseInt(pct, 10) | 0;
+      var cols = process.stdout.columns - 3;
+      var wid = (pct / 100) * cols | 0;
+      var rem = cols - wid;
       print('\n' + chalk.bold('['));
-      print(chalk.cyan(Array(pct+1).join('-'))); // ✈
+      print(chalk.cyan(Array(wid+1).join('-'))); // ✈
       print(chalk.bold('✈'));
       print(Array(rem+1).join(' '));
       print(chalk.bold(']') + '\n');
-      println(elapsed + ' elapsed, ' + remaining + ' remaining');
+      var time = elapsed + ' elapsed, ' + remaining + ' left';
+      var ctr = (process.stdout.columns - time.length) / 2 | 0;
+      print(Array(ctr).join(' '));
+      print(time + '\n');
     }
 
     println();
