@@ -1,6 +1,6 @@
 {
   "name": "flight-status",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "grab flight status",
   "main": "index.js",
   "scripts": {
