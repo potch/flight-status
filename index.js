@@ -67,8 +67,10 @@ request('http://flightaware.com/live/flight/' + code, function (error, response,
       arrival = chalk.red(arrival.text().trim());
     }
 
+    data.status = data.status.replace(/\([^\)]*$/, '');
+
     println();
-    println('Status:    ' + chalk.bold(data.status));
+    println('Status:    ' + chalk.bold(data.status.trim()));
     println('Departure: ' + departure);
     println('           ' + origin);
     println('Arrival:   ' + arrival);
@@ -76,14 +78,14 @@ request('http://flightaware.com/live/flight/' + code, function (error, response,
 
     var progress = $('.track-panel-progress');
     if (progress.length) {
-      var elapsed = $('.track-panel-progress-fill').text().trim();
-      var remaining = $('.track-panel-progress-empty').text().trim();
+      var elapsed = $('.track-panel-progress-fill').text().trim() || $('.track-panel-progress-label').text().trim();
+      var remaining = $('.track-panel-progress-empty').text().trim() || $('.track-panel-progress-label').text().trim();
       var pct = $('.track-panel-progress-fill').css('width');
       pct = parseInt(pct, 10) | 0;
-      var cols = process.stdout.columns - 3;
+      var cols = process.stdout.columns - 5;
       var wid = (pct / 100) * cols | 0;
       var rem = cols - wid;
-      print('\n' + chalk.bold('['));
+      print('\n' + chalk.bold(' ['));
       print(chalk.cyan(Array(wid+1).join('-'))); // ✈
       print(chalk.bold('✈'));
       print(Array(rem+1).join(' '));
